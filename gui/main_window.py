@@ -6,7 +6,7 @@ from model.user import UserBook
 from utils.globals import MAIN_OPTIONS, get_user_book_by_id
 
 class MainWindow(QtWidgets.QMainWindow):
-    last_frame = None
+    last_frame_position = 0
 
     def __init__(self):
         super().__init__()

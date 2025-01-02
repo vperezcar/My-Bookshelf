@@ -180,6 +180,13 @@ class SQLite3Connection:
 
         return self.cur.lastrowid
     
+    def remove_book_from_user(self, user_book_id):
+        self.cur.execute(
+            "DELETE FROM user_books WHERE user_book_id = ?",
+            (user_book_id,),
+        )
+        self.conn.commit()
+    
     def update_user_book_status(self, user_book_id, status):
         self.cur.execute(
             "UPDATE user_books SET status = ? WHERE user_book_id = ?",

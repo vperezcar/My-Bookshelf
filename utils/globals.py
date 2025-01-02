@@ -64,6 +64,15 @@ def add_book_to_user(book, status):
 
     return user_book
 
+def remove_book_from_user(user_book):
+    if user_book.status == UserBookStatus.READ:
+        USER.read_books.remove(user_book)
+    elif user_book.status == UserBookStatus.READING:
+        USER.reading_books.remove(user_book)
+    else:
+        USER.want_to_read_books.remove(user_book)
+    DATABASE_CONNECTION.remove_book_from_user(user_book.user_book_id)
+
 def get_user_book_by_id(id):
     for user_book in USER.want_to_read_books + USER.reading_books + USER.read_books:
         if user_book.book.id == id:

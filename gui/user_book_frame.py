@@ -1,7 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from model.user import UserBook, UserBookStatus
 from model.book import Book
-from utils.globals import USER_BOOK_TABS, add_book_to_user, update_user_book_status, update_user_book_score
+from utils.globals import USER_BOOK_TABS, add_book_to_user, remove_book_from_user, update_user_book_status, update_user_book_score
 import functools
 
 class UserBookFrame(QtWidgets.QFrame):
@@ -9,7 +9,7 @@ class UserBookFrame(QtWidgets.QFrame):
     book: Book = None
     main_window = None
     score_icons: list = []
-    score_icons_position: list = [QtCore.QRect(29, 290, 32, 32), QtCore.QRect(61, 290, 32, 32), QtCore.QRect(93, 290, 32, 32), QtCore.QRect(125, 290, 32, 32), QtCore.QRect(157, 290, 32, 32)]
+    score_icons_position: list = [QtCore.QRect(29, 220, 32, 32), QtCore.QRect(61, 220, 32, 32), QtCore.QRect(93, 220, 32, 32), QtCore.QRect(125, 220, 32, 32), QtCore.QRect(157, 220, 32, 32)]
     score_icons_name: list = ["scoreIcon1", "scoreIcon2", "scoreIcon3", "scoreIcon4", "scoreIcon5"]
 
     def __init__(self, parent, objectName="userBookFrame", visible=False):
@@ -32,13 +32,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
         self.bookIcon.setScaledContents(True)
         self.bookIcon.setObjectName("bookIcon")
-        self.selectorComboBox = QtWidgets.QComboBox(parent=self.centralwidget)
-        self.selectorComboBox.setGeometry(QtCore.QRect(15, 240, 188, 35))
-        self.selectorComboBox.setStyleSheet("background-color: rgb(63, 131, 99);")
-        self.selectorComboBox.setObjectName("selectorComboBox")
-        self.selectorComboBox.addItems(USER_BOOK_TABS)
-        self.selectorComboBox.setEditable(True)
-        self.selectorComboBox.lineEdit().setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+
         self.authorLabel = QtWidgets.QLabel(parent=self.centralwidget)
         self.authorLabel.setGeometry(QtCore.QRect(213, 15, 802, 20))
         self.authorLabel.setStyleSheet("font: 600 12pt \"Ubuntu Sans\";\n"
@@ -95,6 +89,38 @@ class UserBookFrame(QtWidgets.QFrame):
             star.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
             self.score_icons.append(star)
 
+        self.readButton = QtWidgets.QPushButton(parent=self)
+        self.readButton.setGeometry(QtCore.QRect(15, 267, 188, 35))
+        self.readButton.setStyleSheet("background-color: rgb(63, 131, 99);")
+        self.readButton.setText(USER_BOOK_TABS[0])
+        self.readButton.setObjectName("readButton")
+        self.readButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.readButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
+
+        self.readingButton = QtWidgets.QPushButton(parent=self)
+        self.readingButton.setGeometry(QtCore.QRect(15, 317, 188, 35))
+        self.readingButton.setStyleSheet("background-color: rgb(63, 131, 99);")
+        self.readingButton.setText(USER_BOOK_TABS[1])
+        self.readingButton.setObjectName("readingButton")
+        self.readingButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.readingButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
+
+        self.wantToReadButton = QtWidgets.QPushButton(parent=self)
+        self.wantToReadButton.setGeometry(QtCore.QRect(15, 367, 188, 35))
+        self.wantToReadButton.setStyleSheet("background-color: rgb(63, 131, 99);")
+        self.wantToReadButton.setText(USER_BOOK_TABS[2])
+        self.wantToReadButton.setObjectName("wantToReadButton")
+        self.wantToReadButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.wantToReadButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
+
+        self.removeButton = QtWidgets.QPushButton(parent=self)
+        self.removeButton.setGeometry(QtCore.QRect(15, 417, 188, 35))
+        self.removeButton.setStyleSheet("background-color: rgb(224, 27, 36);")
+        self.removeButton.setText("Eliminar de Mis Libros")
+        self.removeButton.setObjectName("removeButton")
+        self.removeButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.removeButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
+
     def display_book_information(self, user_book):
         self.user_book = None
         self.book = None
@@ -120,13 +146,18 @@ class UserBookFrame(QtWidgets.QFrame):
             self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
 
         if is_user_book:
-            self.selectorComboBox.setCurrentIndex(user_book.status.value)
             self.draw_review()
-            self.user_book_events()
         else:
-            self.selectorComboBox.setCurrentIndex(-1)
-            self.book_events()
             self.hide_review()
+
+        self.enable_buttons(is_user_book)
+        self.events()
+
+    def enable_buttons(self, is_user_book):
+        self.readButton.setVisible(not is_user_book or self.user_book.status.value != 0)
+        self.readingButton.setVisible(not is_user_book or self.user_book.status.value != 1)
+        self.wantToReadButton.setVisible(not is_user_book or self.user_book.status.value != 2)
+        self.removeButton.setVisible(is_user_book)
 
     def draw_review(self):
         for i in range(5):
@@ -138,13 +169,18 @@ class UserBookFrame(QtWidgets.QFrame):
             self.score_icons[i].setVisible(False)
 
     def user_book_events(self):
-        self.selectorComboBox.currentIndexChanged.connect(lambda: self.update_user_book_status(self.selectorComboBox.currentIndex()))
-
         for i in range(5):
             self.score_icons[i].mousePressEvent = functools.partial(self.update_user_book_score, score=i + 1)
 
-    def book_events(self):
-        self.selectorComboBox.currentIndexChanged.connect(lambda: self.update_user_book_status(self.selectorComboBox.currentIndex()))
+    def events(self):
+        self.readButton.clicked.connect(lambda: self.update_user_book_status(0))
+        self.readingButton.clicked.connect(lambda: self.update_user_book_status(1))
+        self.wantToReadButton.clicked.connect(lambda: self.update_user_book_status(2))
+        self.removeButton.clicked.connect(lambda: self.remove_book_from_user())
+
+        if self.user_book:
+            for i in range(5):
+                self.score_icons[i].mousePressEvent = functools.partial(self.update_user_book_score, score=i + 1)
 
     def update_user_book_status(self, status):
         if self.user_book:
@@ -161,6 +197,16 @@ class UserBookFrame(QtWidgets.QFrame):
             self.user_book = add_book_to_user(self.book, status)
             self.draw_review()
             self.user_book_events()
+
+        self.enable_buttons(self.user_book != None)
+
+    def remove_book_from_user(self):
+        if self.user_book:
+            remove_book_from_user(self.user_book)
+            self.user_book = None
+            self.enable_buttons(False)
+
+            self.hide_review()
 
     def update_user_book_score(self, event, score):
         if self.user_book.score != score:

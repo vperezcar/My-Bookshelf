@@ -79,6 +79,87 @@ color: rgb(0, 0, 0);</string>
 font: 14pt &quot;Ubuntu Sans&quot;;</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="backResultButton">
+   <property name="geometry">
+    <rect>
+     <x>857</x>
+     <y>583</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 20pt &quot;Ubuntu Sans&quot;;
+
+ background-color: white;
+ border-style: solid;
+ border-width:1px;
+ border-radius:50px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../assets/icons8-back-24.png</normaloff>../assets/icons8-back-24.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="backResultButton_2">
+   <property name="geometry">
+    <rect>
+     <x>983</x>
+     <y>583</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 20pt &quot;Ubuntu Sans&quot;;
+
+ background-color: white;
+ border-style: solid;
+ border-width:1px;
+ border-radius:50px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../assets/icons8-forward-24.png</normaloff>../assets/icons8-forward-24.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="pageResultEdit">
+   <property name="geometry">
+    <rect>
+     <x>904</x>
+     <y>583</y>
+     <width>64</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
