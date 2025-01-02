@@ -16,6 +16,69 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
+  <widget class="QPushButton" name="searchButton">
+   <property name="geometry">
+    <rect>
+     <x>768</x>
+     <y>50</y>
+     <width>48</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 20pt &quot;Ubuntu Sans&quot;;
+
+ background-color: white;
+ border-style: solid;
+ border-width:1px;
+ border-radius:50px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../assets/icons8-search-32.png</normaloff>../assets/icons8-search-32.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="searchEdit">
+   <property name="geometry">
+    <rect>
+     <x>256</x>
+     <y>50</y>
+     <width>512</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="searchTypeComboBox">
+   <property name="geometry">
+    <rect>
+     <x>128</x>
+     <y>50</y>
+     <width>128</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(63, 131, 99);
+font: 14pt &quot;Ubuntu Sans&quot;;</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

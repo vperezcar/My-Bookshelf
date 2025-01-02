@@ -171,10 +171,10 @@ class SQLite3Connection:
                 user_books.append(user_book)
             return user_books
 
-    def add_book_to_user(self, user_id, book_id):
+    def add_book_to_user(self, user_id, book_id, status=2):
         self.cur.execute(
-            "INSERT INTO user_books (user_id, book_id) VALUES (?, ?)",
-            (user_id, book_id),
+            "INSERT INTO user_books (user_id, book_id, status) VALUES (?, ?, ?)",
+            (user_id, book_id, status),
         )
         self.conn.commit()
 

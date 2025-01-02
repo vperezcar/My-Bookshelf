@@ -15,7 +15,7 @@ class Search:
 class SearchType(Enum):
     Titulo = 0
     Autor = 1
-    Publisher = 2
+    Editora = 2
     Categoria = 3
     ISBN = 4
     LCCN = 5

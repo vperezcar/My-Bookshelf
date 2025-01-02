@@ -39,10 +39,11 @@ class Book:
         self.image_links = image_links
         self.language = language
         image_link = None
-        if "smallThumbnail" in self.image_links:
-            image_link = self.image_links["smallThumbnail"]
-        elif "thumbnail" in self.image_links:
-            image_link = self.image_links["thumbnail"]
+        if self.image_links:
+            if "smallThumbnail" in self.image_links:
+                image_link = self.image_links["smallThumbnail"]
+            elif "thumbnail" in self.image_links:
+                image_link = self.image_links["thumbnail"]
         self.image = Image(image_link) if image_link else None
 
     def get_authors(self):

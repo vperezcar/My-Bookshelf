@@ -1,8 +1,13 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from gui.book_page_frame import BookPageFrame
 from gui.user_book_frame import UserBookFrame
+from gui.search_frame import SearchFrame
+from model.user import UserBook
+from utils.globals import MAIN_OPTIONS, get_user_book_by_id
 
 class MainWindow(QtWidgets.QMainWindow):
+    last_frame = None
+
     def __init__(self):
         super().__init__()
         self.setupUi()
@@ -29,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.myBookButton.setIcon(icon)
         self.myBookButton.setIconSize(QtCore.QSize(32, 32))
         self.myBookButton.setObjectName("myBookButton")
-        self.myBookButton.clicked.connect(lambda: self.switchPage(0, "Mis Libros"))
+        self.myBookButton.clicked.connect(lambda: self.switchPage(0))
 
         self.titleLabel = QtWidgets.QLabel(parent=self.sideMenuFrame)
         self.titleLabel.setGeometry(QtCore.QRect(30, 20, 181, 71))
@@ -45,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mySearchButton.setIcon(icon1)
         self.mySearchButton.setIconSize(QtCore.QSize(32, 32))
         self.mySearchButton.setObjectName("mySearchButton")
-        self.mySearchButton.clicked.connect(lambda: self.switchPage(1, "Búsqueda"))
+        self.mySearchButton.clicked.connect(lambda: self.switchPage(1))
 
         self.mainFrame = QtWidgets.QFrame(parent=self.centralwidget)
         self.mainFrame.setGeometry(QtCore.QRect(250, 0, 1030, 720))
@@ -82,7 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # List of frames used to display the main window, only one is visible at a time
         self.frames = []
         self.frames.append(BookPageFrame(self, "bookPageFrame", True))
-        #self.frames.append(UserBookFrame(self, "userBookFrame", False))
+        self.frames.append(SearchFrame(self, "searchFrame", False))
 
         # Frame used to display the book information
         self.userBookFrame = UserBookFrame(self, "userBookFrame", False)
@@ -97,20 +102,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mySearchButton.setText("Búsqueda")
         self.sectionLabel.setText("Mis Libros")
 
-    def switchPage(self, position, sectionText):
+    def switchPage(self, position):
         self.backButton.setVisible(False)
         self.userBookFrame.setVisible(False)
         for i, frame in enumerate(self.frames):
+            frame.setVisible(i == position)
             if i == position:
-                frame.setVisible(True)
+                self.last_frame_position = i
                 frame.draw_ui()
-        self.sectionLabel.setText(sectionText)
+        self.sectionLabel.setText(MAIN_OPTIONS[position])
 
-    def showBookFrame(self, user_book):
+    def showBookFrame(self, book):
+        # Check if the book is an instance of User
+        if isinstance(book, UserBook):
+            user_book = book
+        else:
+            user_book = get_user_book_by_id(book.id)
+            if not user_book:
+                user_book = book
         self.backButton.setVisible(True)
-        self.backButton.clicked.connect(lambda: self.switchPage(0, "Mis Libros"))
+        self.backButton.clicked.connect(lambda: self.switchPage(self.last_frame_position))
         for frame in self.frames:
             frame.setVisible(False)
-        self.sectionLabel.setText(user_book.book.title)
-        self.userBookFrame.display_book_information(user_book)
+        if isinstance(user_book, UserBook):
+            self.sectionLabel.setText(user_book.book.title)
+            self.userBookFrame.display_book_information(user_book)
+        else:
+            self.sectionLabel.setText(user_book.title)
+            self.userBookFrame.display_book_information(user_book)
         self.userBookFrame.setVisible(True)

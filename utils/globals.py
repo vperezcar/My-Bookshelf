@@ -1,5 +1,5 @@
 import sqlite3_connection.sqlite3_connection as sqlite3_connection
-from model.user import UserBookStatus
+from model.user import UserBook, UserBookStatus
 
 # Database connection used to retrieve and store data
 DATABASE_CONNECTION = None
@@ -7,8 +7,14 @@ DATABASE_CONNECTION = None
 # User logged in the application
 USER = None
 
+# Main options
+MAIN_OPTIONS = ["Mis Libros", "Búsqueda", "Salir"]
+
 # User book tabs
 USER_BOOK_TABS = ["Leído", "Leyendo", "Quiero leer"]
+
+# Search types
+SEARCH_TYPES = ["Todo", "Título", "Autor", "Editora", "Categoría", "ISBN", "LCCN", "OCLC"]
 
 def initialize_database(user):
     global DATABASE_CONNECTION, USER
@@ -40,3 +46,26 @@ def update_user_book_status(user_book, status):
 
 def update_user_book_score(user_book, score):
     DATABASE_CONNECTION.update_user_book_score(user_book.user_book_id, score)
+
+def add_book_to_user(book, status):
+    book_id = DATABASE_CONNECTION.get_book_id(book.id)
+    if not book_id:
+        book_id = DATABASE_CONNECTION.add_book(book)
+
+    user_book_id = DATABASE_CONNECTION.add_book_to_user(USER.user_id, book_id, status)
+
+    user_book = UserBook(user_book_id, USER.user_id, book_id, book, status=UserBookStatus(status))
+    if status == UserBookStatus.READ.value:
+        USER.read_books.append(user_book)
+    elif status == UserBookStatus.READING.value:
+        USER.reading_books.append(user_book)
+    else:
+        USER.want_to_read_books.append(user_book)
+
+    return user_book
+
+def get_user_book_by_id(id):
+    for user_book in USER.want_to_read_books + USER.reading_books + USER.read_books:
+        if user_book.book.id == id:
+            return user_book
+    return None

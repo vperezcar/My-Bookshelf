@@ -209,7 +209,7 @@ color: rgb(0, 0, 0);</string>
 color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Publisher</string>
+     <string>Editora</string>
     </property>
    </widget>
    <widget class="QLabel" name="numberOfPagesLabel">
@@ -243,7 +243,7 @@ color: rgb(0, 0, 0);</string>
 color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Publisher Date</string>
+     <string>Editora Date</string>
     </property>
    </widget>
   </widget>
