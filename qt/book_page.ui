@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1030</width>
+    <height>630</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QFrame" name="topFrame">
+   <property name="geometry">
+    <rect>
+     <x>155</x>
+     <y>15</y>
+     <width>720</width>
+     <height>90</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(244, 242, 233);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="readIcon">
+    <property name="geometry">
+     <rect>
+      <x>64</x>
+      <y>13</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-reading-64.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="booksReadLAbel">
+    <property name="geometry">
+     <rect>
+      <x>192</x>
+      <y>30</y>
+      <width>464</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 20pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Has leído 52 libros</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QTabWidget" name="userBookTab">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>120</y>
+     <width>1000</width>
+     <height>495</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 600 14pt &quot;Ubuntu Sans&quot;;</string>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="readTab">
+    <attribute name="title">
+     <string>Leído</string>
+    </attribute>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>996</width>
+       <height>458</height>
+      </rect>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>994</width>
+        <height>456</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="readingTab">
+    <attribute name="title">
+     <string>Leyendo</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="wantToReadTab">
+    <attribute name="title">
+     <string>Quiero Leer</string>
+    </attribute>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

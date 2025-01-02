@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1030</width>
+    <height>630</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="bookIcon">
+    <property name="geometry">
+     <rect>
+      <x>45</x>
+      <y>15</y>
+      <width>128</width>
+      <height>193</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-reading-64.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="selectorComboBox">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>240</y>
+      <width>188</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(63, 131, 99);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="titleIcon">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>15</y>
+      <width>802</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 16pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Title</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="authorLabel">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>65</y>
+      <width>802</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 12pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Author</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="descriptionLabel">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>95</y>
+      <width>802</width>
+      <height>140</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 12pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Description</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="start1Icon_4">
+    <property name="geometry">
+     <rect>
+      <x>125</x>
+      <y>290</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-star-32.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="start1Icon_5">
+    <property name="geometry">
+     <rect>
+      <x>157</x>
+      <y>290</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-star-32.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="start1Icon_3">
+    <property name="geometry">
+     <rect>
+      <x>93</x>
+      <y>290</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-star-32.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="start1Icon">
+    <property name="geometry">
+     <rect>
+      <x>29</x>
+      <y>290</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-star-32.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="start1Icon_2">
+    <property name="geometry">
+     <rect>
+      <x>61</x>
+      <y>290</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../assets/icons8-star-32.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="publishedLabel">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>275</y>
+      <width>802</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 12pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Publisher</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="numberOfPagesLabel">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>250</y>
+      <width>802</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 12pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Pages</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="publishedDateLabel">
+    <property name="geometry">
+     <rect>
+      <x>213</x>
+      <y>305</y>
+      <width>802</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 600 12pt &quot;Ubuntu Sans&quot;;
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Publisher Date</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
