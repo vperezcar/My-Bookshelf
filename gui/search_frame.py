@@ -7,6 +7,7 @@ import re
 
 class SearchFrame(QtWidgets.QFrame):
     main_window = None
+    search_topic = None
     books = None
     page: int = 1
     number_of_books: int = -1
@@ -148,9 +149,10 @@ class SearchFrame(QtWidgets.QFrame):
             if search_type > 6:
                 search_type = 0
 
-        if not self.cache_books or self.cache_books[(self.page - 1) * 10] == None:
+        if not self.search_topic or search != self.search_topic or not self.cache_books or self.cache_books[(self.page - 1) * 10] == None:
             # skip search if we got the books already
             self.books = search_books(search, search_by_field=search_by_field, search_type=search_type, start_index=(self.page - 1) * 10)
+            self.search_topic = search
         else:
             self.books.books = self.cache_books[(self.page - 1) * 10:self.page * 10]
 

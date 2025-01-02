@@ -92,7 +92,7 @@ def parse_book(book):
         publisher=volume_info.get("publisher", None),
         published_date=volume_info.get("publishedDate", None),
         description=volume_info.get("description", "No description available"),
-        page_count=volume_info.get("page_count", None),
+        page_count=volume_info.get("pageCount", None),
         categories=volume_info.get("categories", None),
         image_links=volume_info.get("imageLinks", None),
         language=volume_info.get("language", None),
