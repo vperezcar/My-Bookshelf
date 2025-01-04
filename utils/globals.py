@@ -25,6 +25,16 @@ SEARCH_TYPES = [
     "OCLC",
 ]
 
+# Order books by
+ORDER_BY = [
+    "Título",
+    "Autor",
+    "Fecha de públicacion original",
+    "Número de páginas",
+    "Fecha actualizado",
+    "Mi calificación",
+]
+
 
 def initialize_database(user):
     global DATABASE_CONNECTION, USER

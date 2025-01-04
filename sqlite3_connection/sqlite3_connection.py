@@ -59,7 +59,7 @@ class SQLite3Connection:
                 book_id INTEGER,
                 score INTEGER DEFAULT 0,
                 status INTEGER DEFAULT 2,
-                update_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                update_date TEXT,
                 FOREIGN KEY (user_id) REFERENCES users(user_id),
                 FOREIGN KEY (book_id) REFERENCES books(book_id)
             )

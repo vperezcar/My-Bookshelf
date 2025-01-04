@@ -219,15 +219,12 @@ class UserBookFrame(QtWidgets.QFrame):
             )
             self.score_icons[i].setVisible(self.user_book.status.value == 0)
 
-        # Show the updated date if it exists and the status is read
-        if self.user_book.status.value == 0:
-            if self.user_book.update_date:
-                self.updatedDateLabel.setVisible(True)
-                self.updatedDateLabel.setText(
-                    f"Ultima actualizacion: {self.user_book.update_date}"
-                )
-        else:
-            self.updatedDateLabel.setVisible(False)
+        # Show the updated date if it exists
+        if self.user_book.update_date:
+            self.updatedDateLabel.setVisible(True)
+            self.updatedDateLabel.setText(
+                f"Ultima actualizacion: {self.user_book.update_date}"
+            )
 
     def hide_user_book_specific_data(self):
         for i in range(5):
@@ -262,21 +259,15 @@ class UserBookFrame(QtWidgets.QFrame):
                     update_user_book_score(self.user_book, 0)
                 update_user_book_status(self.user_book, status)
                 self.user_book.status = UserBookStatus(status)
-                # Update the updated date if the status is read
-                if status == 0:
-                    self.user_book.update_date = (
-                        QtCore.QDateTime.currentDateTime().toString(
-                            "dd-MM-yyyy hh:mm:ss"
-                        )
-                    )
-                    update_user_book_update_date(
-                        self.user_book, self.user_book.update_date
-                    )
+                # Update the updated date
+                self.update_user_book_update_date()
 
                 self.draw_user_book_specific_data()
         else:
             # Add it to the user books, and show the review
             self.user_book = add_book_to_user(self.book, status)
+            # Update the updated date
+            self.update_user_book_update_date()
             self.draw_user_book_specific_data()
             self.user_book_events()
 
@@ -295,3 +286,11 @@ class UserBookFrame(QtWidgets.QFrame):
             update_user_book_score(self.user_book, score)
             self.user_book.score = score
             self.draw_user_book_specific_data()
+            # Update the updated date
+            self.update_user_book_update_date()
+
+    def update_user_book_update_date(self):
+        self.user_book.update_date = QtCore.QDateTime.currentDateTime().toString(
+            "dd/MM/yyyy hh:mm:ss"
+        )
+        update_user_book_update_date(self.user_book, self.user_book.update_date)
