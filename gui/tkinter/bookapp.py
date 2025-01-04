@@ -5,7 +5,7 @@ from searchform import SearchForm
 class BookApp(Tk):
     def __init__(self):
         super().__init__()
-        self.title("My Book App")
+        self.title("My Bookshelf")
         self.minsize(1280, 720)
         self.geometry("1280x720")
         self.configure(bg="#FFFFFF")

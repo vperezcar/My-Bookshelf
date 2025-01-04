@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>My Book App</string>
+   <string>My Bookshelf</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -76,7 +76,7 @@ font: 20pt &quot;Ubuntu Sans&quot;;</string>
 font: 600 22pt &quot;Ubuntu Sans&quot;;</string>
      </property>
      <property name="text">
-      <string>My Book App</string>
+      <string>My Bookshelf</string>
      </property>
     </widget>
     <widget class="QPushButton" name="mySearchButton">

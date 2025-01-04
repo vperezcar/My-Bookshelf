@@ -117,9 +117,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.setWindowTitle("My Book App")
+        self.setWindowTitle("My Bookshelf")
         self.myBookButton.setText("Mis Libros")
-        self.titleLabel.setText("My Book App")
+        self.titleLabel.setText("My Bookshelf")
         self.mySearchButton.setText("Búsqueda")
         self.sectionLabel.setText("Mis Libros")
 
