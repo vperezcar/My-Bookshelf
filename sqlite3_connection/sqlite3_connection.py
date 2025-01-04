@@ -202,3 +202,10 @@ class SQLite3Connection:
             (score, user_book_id),
         )
         self.conn.commit()
+
+    def update_user_book_update_date(self, user_book_id, update_date):
+        self.cur.execute(
+            "UPDATE user_books SET update_date = ? WHERE user_book_id = ?",
+            (update_date, user_book_id),
+        )
+        self.conn.commit()
