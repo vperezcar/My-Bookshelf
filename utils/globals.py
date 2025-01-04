@@ -14,7 +14,7 @@ MAIN_OPTIONS = ["Mis Libros", "Búsqueda", "Salir"]
 USER_BOOK_TABS = ["Leído", "Leyendo", "Quiero leer"]
 
 # Search types
-SEARCH_TYPES = ["Todo", "Título", "Autor", "Editora", "Categoría", "ISBN", "LCCN", "OCLC"]
+SEARCH_TYPES = ["Todo", "Título", "Autor", "Editorial", "Categoría", "ISBN", "LCCN", "OCLC"]
 
 def initialize_database(user):
     global DATABASE_CONNECTION, USER
@@ -46,6 +46,9 @@ def update_user_book_status(user_book, status):
 
 def update_user_book_score(user_book, score):
     DATABASE_CONNECTION.update_user_book_score(user_book.user_book_id, score)
+
+def update_user_book_update_date(user_book, update_date):
+    DATABASE_CONNECTION.update_user_book_update_date(user_book.user_book_id, update_date)
 
 def add_book_to_user(book, status):
     book_id = DATABASE_CONNECTION.get_book_id(book.id)

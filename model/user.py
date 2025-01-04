@@ -14,6 +14,7 @@ class UserBook:
     book_id: int
     score: int
     status: UserBookStatus
+    update_date: str
     book: Book
 
     def __init__(
@@ -24,6 +25,7 @@ class UserBook:
         book,
         score=0,
         status=UserBookStatus.WANT_TO_READ,
+        update_date=None,
     ):
         self.user_book_id = user_book_id
         self.user_id = user_id
@@ -31,6 +33,7 @@ class UserBook:
         self.book = book
         self.score = score
         self.status = status
+        self.update_date = update_date
 
 
 class User:

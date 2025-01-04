@@ -59,6 +59,7 @@ class SQLite3Connection:
                 book_id INTEGER,
                 score INTEGER DEFAULT 0,
                 status INTEGER DEFAULT 2,
+                update_date TEXT DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users(user_id),
                 FOREIGN KEY (book_id) REFERENCES books(book_id)
             )
@@ -167,6 +168,7 @@ class SQLite3Connection:
                     book,
                     db_user_book[14],
                     UserBookStatus(db_user_book[15]),
+                    db_user_book[16],
                 )
                 user_books.append(user_book)
             return user_books

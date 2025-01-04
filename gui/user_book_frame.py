@@ -1,7 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from model.user import UserBook, UserBookStatus
 from model.book import Book
-from utils.globals import USER_BOOK_TABS, add_book_to_user, remove_book_from_user, update_user_book_status, update_user_book_score
+from utils.globals import USER_BOOK_TABS, add_book_to_user, remove_book_from_user, update_user_book_status, update_user_book_score, update_user_book_update_date
 import functools
 
 class UserBookFrame(QtWidgets.QFrame):
@@ -121,6 +121,13 @@ class UserBookFrame(QtWidgets.QFrame):
         self.removeButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
         self.removeButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
 
+        self.updatedDateLabel = QtWidgets.QLabel(parent=self.centralwidget)
+        self.updatedDateLabel.setGeometry(QtCore.QRect(15, 467, 188, 70))
+        self.updatedDateLabel.setStyleSheet("font: 600 12pt \"Ubuntu Sans\";\n"
+                "color: rgb(0, 0, 0);")
+        self.updatedDateLabel.setObjectName("updatedDateLabel")
+        self.updatedDateLabel.setWordWrap(True)
+
     def display_book_information(self, user_book):
         self.user_book = None
         self.book = None
@@ -146,9 +153,9 @@ class UserBookFrame(QtWidgets.QFrame):
             self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
 
         if is_user_book:
-            self.draw_review()
+            self.draw_user_book_specific_data()
         else:
-            self.hide_review()
+            self.hide_user_book_specific_data()
 
         self.enable_buttons(is_user_book)
         self.events()
@@ -159,14 +166,24 @@ class UserBookFrame(QtWidgets.QFrame):
         self.wantToReadButton.setVisible(not is_user_book or self.user_book.status.value != 2)
         self.removeButton.setVisible(is_user_book)
 
-    def draw_review(self):
+    def draw_user_book_specific_data(self):
         for i in range(5):
             self.score_icons[i].setPixmap(QtGui.QPixmap("qt/../assets/icons8-star-32.png") if self.user_book.score > i else QtGui.QPixmap("qt/../assets/icons8-grey-star-32.png"))
             self.score_icons[i].setVisible(self.user_book.status.value == 0)
 
-    def hide_review(self):
+        # Show the updated date if it exists and the status is read
+        if self.user_book.status.value == 0:
+            if self.user_book.update_date:
+                self.updatedDateLabel.setVisible(True)
+                self.updatedDateLabel.setText(f"Ultima actualizacion: {self.user_book.update_date}")
+        else:
+            self.updatedDateLabel.setVisible(False)
+
+    def hide_user_book_specific_data(self):
         for i in range(5):
             self.score_icons[i].setVisible(False)
+
+        self.updatedDateLabel.setVisible(False)
 
     def user_book_events(self):
         for i in range(5):
@@ -191,11 +208,16 @@ class UserBookFrame(QtWidgets.QFrame):
                     update_user_book_score(self.user_book, 0)
                 update_user_book_status(self.user_book, status)
                 self.user_book.status = UserBookStatus(status)
-                self.draw_review()
+                # Update the updated date if the status is read
+                if status == 0:
+                    self.user_book.update_date = QtCore.QDateTime.currentDateTime().toString("dd-MM-yyyy hh:mm:ss")
+                    update_user_book_update_date(self.user_book, self.user_book.update_date)
+
+                self.draw_user_book_specific_data()
         else:
             # Add it to the user books, and show the review
             self.user_book = add_book_to_user(self.book, status)
-            self.draw_review()
+            self.draw_user_book_specific_data()
             self.user_book_events()
 
         self.enable_buttons(self.user_book != None)
@@ -206,10 +228,10 @@ class UserBookFrame(QtWidgets.QFrame):
             self.user_book = None
             self.enable_buttons(False)
 
-            self.hide_review()
+            self.hide_user_book_specific_data()
 
     def update_user_book_score(self, event, score):
         if self.user_book.score != score:
             update_user_book_score(self.user_book, score)
             self.user_book.score = score
-            self.draw_review()
+            self.draw_user_book_specific_data()
