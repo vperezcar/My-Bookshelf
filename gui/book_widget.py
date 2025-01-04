@@ -2,6 +2,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from gui.qelided_label import QElidedLabel
 from model.book import Book
 
+
 class BookWidget(QtWidgets.QWidget):
     main_window = None
     book: Book = None
@@ -22,13 +23,15 @@ class BookWidget(QtWidgets.QWidget):
         self.bookIcon.setObjectName("bookIcon")
         self.titleLabel = QElidedLabel(parent=self)
         self.titleLabel.setGeometry(QtCore.QRect(90, 10, 394, 21))
-        self.titleLabel.setStyleSheet("font: 600 12pt \"Ubuntu Sans\";\n"
-"color: rgb(0, 0, 0);")
+        self.titleLabel.setStyleSheet(
+            'font: 600 12pt "Ubuntu Sans";\n' "color: rgb(0, 0, 0);"
+        )
         self.titleLabel.setObjectName("titleLabel")
         self.authorLabel = QElidedLabel(parent=self)
         self.authorLabel.setGeometry(QtCore.QRect(90, 35, 394, 21))
-        self.authorLabel.setStyleSheet("font: 600 10pt \"Ubuntu Sans\";\n"
-"color: rgb(0, 0, 0);")
+        self.authorLabel.setStyleSheet(
+            'font: 600 10pt "Ubuntu Sans";\n' "color: rgb(0, 0, 0);"
+        )
         self.authorLabel.setObjectName("authorLabel")
 
         # Set book
@@ -41,7 +44,6 @@ class BookWidget(QtWidgets.QWidget):
             self.bookIcon.setPixmap(pixmap)
         else:
             self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
-
 
         self.events()
 

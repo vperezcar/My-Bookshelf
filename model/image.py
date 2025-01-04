@@ -2,7 +2,8 @@ import urllib.request
 from PIL import Image as PILImage
 import io
 
-class Image():
+
+class Image:
     data: bytes = None
     width: int = 0
     height: int = 0

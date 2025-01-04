@@ -5,6 +5,7 @@ from gui.search_frame import SearchFrame
 from model.user import UserBook
 from utils.globals import MAIN_OPTIONS, get_user_book_by_id
 
+
 class MainWindow(QtWidgets.QMainWindow):
     last_frame_position = 0
 
@@ -27,10 +28,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sideMenuFrame.setObjectName("sideMenuFrame")
         self.myBookButton = QtWidgets.QPushButton(parent=self.sideMenuFrame)
         self.myBookButton.setGeometry(QtCore.QRect(30, 150, 201, 81))
-        self.myBookButton.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 20pt \"Ubuntu Sans\";")
+        self.myBookButton.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 20pt "Ubuntu Sans";'
+        )
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("qt/../assets/icons8-book-shelf-64.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(
+            QtGui.QPixmap("qt/../assets/icons8-book-shelf-64.png"),
+            QtGui.QIcon.Mode.Normal,
+            QtGui.QIcon.State.Off,
+        )
         self.myBookButton.setIcon(icon)
         self.myBookButton.setIconSize(QtCore.QSize(32, 32))
         self.myBookButton.setObjectName("myBookButton")
@@ -38,15 +44,21 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.titleLabel = QtWidgets.QLabel(parent=self.sideMenuFrame)
         self.titleLabel.setGeometry(QtCore.QRect(30, 20, 181, 71))
-        self.titleLabel.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 600 22pt \"Ubuntu Sans\";")
+        self.titleLabel.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 600 22pt "Ubuntu Sans";'
+        )
         self.titleLabel.setObjectName("titleLabel")
         self.mySearchButton = QtWidgets.QPushButton(parent=self.sideMenuFrame)
         self.mySearchButton.setGeometry(QtCore.QRect(30, 250, 201, 81))
-        self.mySearchButton.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 20pt \"Ubuntu Sans\";")
+        self.mySearchButton.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 20pt "Ubuntu Sans";'
+        )
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("qt/../assets/icons8-search-64.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(
+            QtGui.QPixmap("qt/../assets/icons8-search-64.png"),
+            QtGui.QIcon.Mode.Normal,
+            QtGui.QIcon.State.Off,
+        )
         self.mySearchButton.setIcon(icon1)
         self.mySearchButton.setIconSize(QtCore.QSize(32, 32))
         self.mySearchButton.setObjectName("mySearchButton")
@@ -61,27 +73,36 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.backButton = QtWidgets.QPushButton(parent=self.mainFrame)
         self.backButton.setGeometry(QtCore.QRect(13, 13, 64, 64))
-        self.backButton.setStyleSheet("color: rgb(0, 0, 0);\n"
-            "font: 20pt \"Ubuntu Sans\";\n"
+        self.backButton.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            'font: 20pt "Ubuntu Sans";\n'
             "\n"
             " background-color: white;\n"
             " border-style: solid;\n"
             " border-width:1px;\n"
-            " border-radius:50px;")
+            " border-radius:50px;"
+        )
         self.backButton.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("qt/../assets/icons8-back-64.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(
+            QtGui.QPixmap("qt/../assets/icons8-back-64.png"),
+            QtGui.QIcon.Mode.Normal,
+            QtGui.QIcon.State.Off,
+        )
         self.backButton.setIcon(icon2)
         self.backButton.setIconSize(QtCore.QSize(32, 32))
         self.backButton.setObjectName("backButton")
-        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
+        self.backButton.setCursor(
+            QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
+        )
         self.backButton.setAttribute(QtCore.Qt.WidgetAttribute.WA_Hover)
         self.backButton.hide()
 
         self.sectionLabel = QtWidgets.QLabel(parent=self.mainFrame)
         self.sectionLabel.setGeometry(QtCore.QRect(90, 0, 925, 90))
-        self.sectionLabel.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 600 22pt \"Ubuntu Sans\";")
+        self.sectionLabel.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 600 22pt "Ubuntu Sans";'
+        )
         self.sectionLabel.setObjectName("sectionLabel")
 
         # List of frames used to display the main window, only one is visible at a time
@@ -121,7 +142,9 @@ class MainWindow(QtWidgets.QMainWindow):
             if not user_book:
                 user_book = book
         self.backButton.setVisible(True)
-        self.backButton.clicked.connect(lambda: self.switchPage(self.last_frame_position))
+        self.backButton.clicked.connect(
+            lambda: self.switchPage(self.last_frame_position)
+        )
         for frame in self.frames:
             frame.setVisible(False)
         if isinstance(user_book, UserBook):

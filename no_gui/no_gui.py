@@ -2,16 +2,20 @@ from api.search import SearchType, search_books
 from model.user import UserBookStatus, UserBook
 from utils.globals import DATABASE_CONNECTION, USER
 
+
 def print_menu():
     print("1. Mis Libros")
     print("2. Busqueda")
     print("3. Salir")
 
+
 def print_books(books):
     for i, book in enumerate(books):
         print(f"{i}. {book.title} - {book.authors}")
 
+
 # My books functions
+
 
 def display_user_book(user_book):
     print(f"Titulo: {user_book.book.title}")
@@ -30,38 +34,52 @@ def display_user_book(user_book):
             USER.read_books.remove(user_book)
             if option.lower() == "l":
                 user_book.status = UserBookStatus.READING
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.READING.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.READING.value
+                )
                 USER.reading_books.append(user_book)
             else:
                 user_book.status = UserBookStatus.WANT_TO_READ
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.WANT_TO_READ.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.WANT_TO_READ.value
+                )
                 USER.want_to_read_books.append(user_book)
         elif user_book.status == UserBookStatus.READING:
             option = input(f"Leido (r) o Quiero leerlo (q): ")
             USER.reading_books.remove(user_book)
             if option.lower() == "r":
                 user_book.status = UserBookStatus.READ
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.READ.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.READ.value
+                )
                 USER.read_books.append(user_book)
             else:
                 user_book.status = UserBookStatus.WANT_TO_READ
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.WANT_TO_READ.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.WANT_TO_READ.value
+                )
                 USER.want_to_read_books.append(user_book)
         else:
             option = input(f"Leido (r) o Leyendo (l): ")
             USER.want_to_read_books.remove(user_book)
             if option.lower() == "r":
                 user_book.status = UserBookStatus.READ
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.READ.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.READ.value
+                )
                 USER.read_books.append(user_book)
             else:
                 user_book.status = UserBookStatus.READING
-                DATABASE_CONNECTION.update_user_book_status(user_book.user_book_id, UserBookStatus.READING.value)
+                DATABASE_CONNECTION.update_user_book_status(
+                    user_book.user_book_id, UserBookStatus.READING.value
+                )
                 USER.reading_books.append(user_book)
+
 
 def print_user_books(user_books):
     for i, user_book in enumerate(user_books):
         print(f"{i}. {user_book.book.title} - {user_book.book.authors}")
+
 
 def my_books():
     if USER.has_books():
@@ -111,9 +129,6 @@ def print_simple_search():
     print("5. ISBN")
     print("6. LCCN")
     print("7. OCLC")
-
-
-
 
 
 def display_book(book):

@@ -2,6 +2,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from gui.user_book_widget import UserBookWidget
 import utils.globals as globals
 
+
 class BookPageFrame(QtWidgets.QFrame):
     main_window = None
     grid_layout: list = []
@@ -32,13 +33,15 @@ class BookPageFrame(QtWidgets.QFrame):
         self.readIcon.setObjectName("readIcon")
         self.booksLabel = QtWidgets.QLabel(parent=self.topFrame)
         self.booksLabel.setGeometry(QtCore.QRect(192, 30, 464, 30))
-        self.booksLabel.setStyleSheet("font: 600 20pt \"Ubuntu Sans\";\n"
-"color: rgb(0, 0, 0);")
+        self.booksLabel.setStyleSheet(
+            'font: 600 20pt "Ubuntu Sans";\n' "color: rgb(0, 0, 0);"
+        )
         self.booksLabel.setObjectName("booksLabel")
         self.userBookTab = QtWidgets.QTabWidget(parent=self)
         self.userBookTab.setGeometry(QtCore.QRect(15, 120, 1000, 495))
-        self.userBookTab.setStyleSheet("color: rgb(0, 0, 0);\n"
-"font: 600 14pt \"Ubuntu Sans\";")
+        self.userBookTab.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 600 14pt "Ubuntu Sans";'
+        )
         self.userBookTab.setObjectName("userBookTab")
 
         self.create_tab_widget()
@@ -70,22 +73,33 @@ class BookPageFrame(QtWidgets.QFrame):
         self.update_book_label()
 
         for i, tab in enumerate(self.tabs):
-            self.userBookTab.setTabText(self.userBookTab.indexOf(tab), globals.USER_BOOK_TABS[i])
+            self.userBookTab.setTabText(
+                self.userBookTab.indexOf(tab), globals.USER_BOOK_TABS[i]
+            )
             # Add books to each grid layout removing the previous ones first
             for j in reversed(range(self.grid_layout[i].count())):
                 self.grid_layout[i].itemAt(j).widget().deleteLater()
-            books = globals.USER.read_books if i == 0 else globals.USER.reading_books if i == 1 else globals.USER.want_to_read_books
+            books = (
+                globals.USER.read_books
+                if i == 0
+                else (
+                    globals.USER.reading_books
+                    if i == 1
+                    else globals.USER.want_to_read_books
+                )
+            )
             if books:
                 j = 0
                 k = 0
                 for book in books:
                     if book:
-                        self.grid_layout[i].addWidget(UserBookWidget(self.main_window, book), j, k)
+                        self.grid_layout[i].addWidget(
+                            UserBookWidget(self.main_window, book), j, k
+                        )
                         k += 1
                         if k == 2:
                             k = 0
                             j += 1
-
 
     def update_book_label(self):
         labelText = ""

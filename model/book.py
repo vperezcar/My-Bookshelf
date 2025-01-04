@@ -1,6 +1,7 @@
 from model.image import Image
 import re
 
+
 class Book:
     book_id: int
     id: str
@@ -50,24 +51,36 @@ class Book:
         return f"De: {"Desconocido" if not self.authors else ", ".join(self.authors)}"
 
     def get_publisher(self):
-        return f"Publicado por: {self.publisher}" if self.publisher else "Editorial desconocida"
+        return (
+            f"Publicado por: {self.publisher}"
+            if self.publisher
+            else "Editorial desconocida"
+        )
 
     def get_published_date(self):
-        return f"Fecha de publicación: {self.published_date}" if self.published_date else "Fecha de publicación desconocida"
-        
+        return (
+            f"Fecha de publicación: {self.published_date}"
+            if self.published_date
+            else "Fecha de publicación desconocida"
+        )
+
     def get_number_of_pages(self):
-        return f"{self.page_count} páginas" if self.page_count else "Número de páginas desconocido"
-    
+        return (
+            f"{self.page_count} páginas"
+            if self.page_count
+            else "Número de páginas desconocido"
+        )
+
     def get_description(self):
         # There are some reviews in the description, beutifiy the text to make it more readable
         if not self.description:
             return "Descripción no disponible"
         match = re.search("Reseñas de .*:", self.description)
         if match:
-            description = self.description[:match.end()] + "\n"
+            description = self.description[: match.end()] + "\n"
             # Retrieve each review and add a new line before it
             index = match.end()
-            reviews = self.description[index:].split("\"")
+            reviews = self.description[index:].split('"')
             # Reviews are between quotes, whereas after that is the author of the review
             author = False
             for review in reviews:
@@ -77,14 +90,14 @@ class Book:
                         description += f"por {review}.\n"
                         author = False
                     else:
-                        description += f"\"{review}\" "
+                        description += f'"{review}" '
                         author = True
             return description
         else:
             return self.description
-        
+
     def get_categories(self):
         return f"Categorías: {"Desconocidas" if not self.categories else ", ".join(self.categories)}"
-    
+
     def get_language(self):
         return f"Idioma: {self.language}" if self.language else "Idioma desconocido"
