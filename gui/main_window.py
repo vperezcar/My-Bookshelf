@@ -3,8 +3,10 @@ from gui.book_page_frame import BookPageFrame
 from gui.user_book_frame import UserBookFrame
 from gui.search_frame import SearchFrame
 from model.user import UserBook
-from utils.globals import MAIN_OPTIONS, get_user_book_by_id
+from utils.constants.constants import MAIN_OPTIONS
+from utils.globals import get_user_book_by_id
 from utils.export import export_to_excel
+import utils.constants.constants as constants
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -133,12 +135,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.retranslateUi()
 
     def retranslateUi(self):
-        self.setWindowTitle("My Bookshelf")
-        self.myBookButton.setText("Mis Libros")
-        self.titleLabel.setText("My Bookshelf")
-        self.mySearchButton.setText("Búsqueda")
-        self.exportExcelButton.setText("Exportar")
-        self.sectionLabel.setText("Mis Libros")
+        self.setWindowTitle(constants.APP_NAME)
+        self.myBookButton.setText(constants.MAIN_OPTIONS[0])
+        self.titleLabel.setText(constants.APP_NAME)
+        self.mySearchButton.setText(constants.MAIN_OPTIONS[1])
+        self.exportExcelButton.setText(constants.MAIN_OPTIONS[2])
+        self.sectionLabel.setText(constants.MAIN_OPTIONS[0])
 
     def switchPage(self, position):
         self.backButton.setVisible(False)
@@ -174,7 +176,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def export_excel(self):
         fileName, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, "Guardar Archivo", "", "Excel Files(*.xlsx); All Files(*.*)"
+            self, constants.EXPORT_TO_EXCEL, "", "Excel Files(*.xlsx); All Files(*.*)"
         )
 
         if fileName:
@@ -183,6 +185,6 @@ class MainWindow(QtWidgets.QMainWindow):
             export_to_excel(fileName)
             msg = QtWidgets.QMessageBox()
             msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
-            msg.setText("Archivo exportado exitosamente")
-            msg.setWindowTitle("Exportar a Excel")
+            msg.setText(constants.SUCCESS_EXPORT)
+            msg.setWindowTitle(constants.EXPORT_TO_EXCEL)
             msg.exec()

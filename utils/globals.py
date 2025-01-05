@@ -7,34 +7,6 @@ DATABASE_CONNECTION = None
 # User logged in the application
 USER = None
 
-# Main options
-MAIN_OPTIONS = ["Mis Libros", "Búsqueda", "Salir"]
-
-# User book tabs
-USER_BOOK_TABS = ["Leído", "Leyendo", "Quiero leer"]
-
-# Search types
-SEARCH_TYPES = [
-    "Todo",
-    "Título",
-    "Autor",
-    "Editorial",
-    "Categoría",
-    "ISBN",
-    "LCCN",
-    "OCLC",
-]
-
-# Order books by
-ORDER_BY = [
-    "Título",
-    "Autor",
-    "Fecha de públicacion original",
-    "Número de páginas",
-    "Fecha actualizado",
-    "Mi calificación",
-]
-
 
 def initialize_database(user):
     global DATABASE_CONNECTION, USER

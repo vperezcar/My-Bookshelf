@@ -1,6 +1,8 @@
 import requests
+import utils.constants.constants as constants
 from model.book import Book
 from enum import Enum
+import locale
 
 
 class Search:
@@ -85,8 +87,11 @@ def advanced_search_books(search_inputs, start_index=0, max_results=10):
 
 def parse_book(book):
     volume_info = book["volumeInfo"]
-    # Change date format from yyyy-mm-dd to dd/mm/yyyy
-    if volume_info.get("publishedDate", None):
+    # Change date format from yyyy-mm-dd to dd/mm/yyyy if language is spanish
+    if (
+        volume_info.get("publishedDate", None)
+        and locale.getdefaultlocale()[0] == "es_ES"
+    ):
         date = volume_info["publishedDate"].split("-")
         volume_info["publishedDate"] = f"{date[2]}/{date[1]}/{date[0]}"
     return Book(
@@ -95,7 +100,7 @@ def parse_book(book):
         authors=volume_info.get("authors", None),
         publisher=volume_info.get("publisher", None),
         published_date=volume_info.get("publishedDate", None),
-        description=volume_info.get("description", "No description available"),
+        description=volume_info.get("description", constants.UNKNOWN_DESCRIPTION),
         page_count=volume_info.get("pageCount", None),
         categories=volume_info.get("categories", None),
         image_links=volume_info.get("imageLinks", None),

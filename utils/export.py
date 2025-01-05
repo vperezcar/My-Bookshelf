@@ -1,7 +1,8 @@
 from openpyxl import Workbook
 from openpyxl.cell.text import InlineFont
 from openpyxl.cell.rich_text import TextBlock, CellRichText
-from utils.globals import get_data, USER_BOOK_TABS
+from utils.globals import get_data
+from utils.constants.constants import USER_BOOK_TABS, EXCEL_HEADERS
 
 
 def export_to_excel(filename):
@@ -12,17 +13,15 @@ def export_to_excel(filename):
         ws = wb[year]
         ws.append(
             [
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Estado")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Calificación")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Título")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Autor")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Editorial")),
-                CellRichText(
-                    TextBlock(InlineFont(b=True, sz=14), "Fecha de Publicación")
-                ),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Número de Páginas")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Categorías")),
-                CellRichText(TextBlock(InlineFont(b=True, sz=14), "Idioma")),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[0])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[1])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[2])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[3])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[4])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[5])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[6])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[7])),
+                CellRichText(TextBlock(InlineFont(b=True, sz=14), EXCEL_HEADERS[8])),
             ]
         )
 

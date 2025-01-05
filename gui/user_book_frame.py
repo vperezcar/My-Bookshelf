@@ -2,13 +2,13 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from model.user import UserBook, UserBookStatus
 from model.book import Book
 from utils.globals import (
-    USER_BOOK_TABS,
     add_book_to_user,
     remove_book_from_user,
     update_user_book_status,
     update_user_book_score,
     update_user_book_update_date,
 )
+import utils.constants.constants as constants
 import functools
 
 
@@ -123,7 +123,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.readButton = QtWidgets.QPushButton(parent=self)
         self.readButton.setGeometry(QtCore.QRect(15, 267, 188, 35))
         self.readButton.setStyleSheet("background-color: rgb(63, 131, 99);")
-        self.readButton.setText(USER_BOOK_TABS[0])
+        self.readButton.setText(constants.USER_BOOK_TABS[0])
         self.readButton.setObjectName("readButton")
         self.readButton.setCursor(
             QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
@@ -133,7 +133,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.readingButton = QtWidgets.QPushButton(parent=self)
         self.readingButton.setGeometry(QtCore.QRect(15, 317, 188, 35))
         self.readingButton.setStyleSheet("background-color: rgb(63, 131, 99);")
-        self.readingButton.setText(USER_BOOK_TABS[1])
+        self.readingButton.setText(constants.USER_BOOK_TABS[1])
         self.readingButton.setObjectName("readingButton")
         self.readingButton.setCursor(
             QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
@@ -143,7 +143,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.wantToReadButton = QtWidgets.QPushButton(parent=self)
         self.wantToReadButton.setGeometry(QtCore.QRect(15, 367, 188, 35))
         self.wantToReadButton.setStyleSheet("background-color: rgb(63, 131, 99);")
-        self.wantToReadButton.setText(USER_BOOK_TABS[2])
+        self.wantToReadButton.setText(constants.USER_BOOK_TABS[2])
         self.wantToReadButton.setObjectName("wantToReadButton")
         self.wantToReadButton.setCursor(
             QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
@@ -153,7 +153,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.removeButton = QtWidgets.QPushButton(parent=self)
         self.removeButton.setGeometry(QtCore.QRect(15, 417, 188, 35))
         self.removeButton.setStyleSheet("background-color: rgb(224, 27, 36);")
-        self.removeButton.setText("Eliminar de Mis Libros")
+        self.removeButton.setText(constants.REMOVE_FROM_MY_BOOKS)
         self.removeButton.setObjectName("removeButton")
         self.removeButton.setCursor(
             QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
@@ -223,7 +223,7 @@ class UserBookFrame(QtWidgets.QFrame):
         if self.user_book.update_date:
             self.updatedDateLabel.setVisible(True)
             self.updatedDateLabel.setText(
-                f"Ultima actualizacion: {self.user_book.update_date}"
+                f"{constants.LAST_UPDATE} {self.user_book.update_date}"
             )
 
     def hide_user_book_specific_data(self):
@@ -291,6 +291,6 @@ class UserBookFrame(QtWidgets.QFrame):
 
     def update_user_book_update_date(self):
         self.user_book.update_date = QtCore.QDateTime.currentDateTime().toString(
-            "dd/MM/yyyy hh:mm:ss"
+            constants.DATE_FORMAT
         )
         update_user_book_update_date(self.user_book, self.user_book.update_date)

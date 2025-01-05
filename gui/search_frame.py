@@ -1,7 +1,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from utils.globals import SEARCH_TYPES
+from utils.constants.constants import SEARCH_TYPES
 from api.search import search_books
 from gui.book_widget import BookWidget
+import utils.constants.constants as constants
 import math
 import re
 
@@ -163,7 +164,7 @@ class SearchFrame(QtWidgets.QFrame):
         self.searchEdit.setObjectName("searchEdit")
         self.searchTab.addTab(self.simpleSearchTab, "")
         self.searchTab.setTabText(
-            self.searchTab.indexOf(self.simpleSearchTab), "Búsqueda Simple"
+            self.searchTab.indexOf(self.simpleSearchTab), constants.SIMPLE_SEARCH
         )
 
         # Add an empty tab to move the advanced search tab to the right
@@ -180,7 +181,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.titleSearchEdit.setText("")
         self.titleSearchEdit.setObjectName("titleSearchEdit")
-        self.titleSearchEdit.setPlaceholderText("Título")
+        self.titleSearchEdit.setPlaceholderText(SEARCH_TYPES[1])
         self.authorSearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.authorSearchEdit.setGeometry(QtCore.QRect(15, 65, 300, 35))
         self.authorSearchEdit.setStyleSheet(
@@ -188,7 +189,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.authorSearchEdit.setText("")
         self.authorSearchEdit.setObjectName("authorSearchEdit")
-        self.authorSearchEdit.setPlaceholderText("Autor")
+        self.authorSearchEdit.setPlaceholderText(SEARCH_TYPES[2])
         self.publisherSearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.publisherSearchEdit.setGeometry(QtCore.QRect(330, 15, 275, 35))
         self.publisherSearchEdit.setStyleSheet(
@@ -196,7 +197,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.publisherSearchEdit.setText("")
         self.publisherSearchEdit.setObjectName("publisherSearchEdit")
-        self.publisherSearchEdit.setPlaceholderText("Editorial")
+        self.publisherSearchEdit.setPlaceholderText(SEARCH_TYPES[3])
         self.categorySearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.categorySearchEdit.setGeometry(QtCore.QRect(330, 65, 275, 35))
         self.categorySearchEdit.setStyleSheet(
@@ -204,7 +205,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.categorySearchEdit.setText("")
         self.categorySearchEdit.setObjectName("categorySearchEdit")
-        self.categorySearchEdit.setPlaceholderText("Categoria")
+        self.categorySearchEdit.setPlaceholderText(SEARCH_TYPES[4])
         self.isbnSearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.isbnSearchEdit.setGeometry(QtCore.QRect(620, 15, 150, 35))
         self.isbnSearchEdit.setStyleSheet(
@@ -212,7 +213,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.isbnSearchEdit.setText("")
         self.isbnSearchEdit.setObjectName("isbnSearchEdit")
-        self.isbnSearchEdit.setPlaceholderText("ISBN")
+        self.isbnSearchEdit.setPlaceholderText(SEARCH_TYPES[5])
         self.lccnSearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.lccnSearchEdit.setGeometry(QtCore.QRect(620, 65, 150, 35))
         self.lccnSearchEdit.setStyleSheet(
@@ -220,7 +221,7 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.lccnSearchEdit.setText("")
         self.lccnSearchEdit.setObjectName("lccnSearchEdit")
-        self.lccnSearchEdit.setPlaceholderText("LCCN")
+        self.lccnSearchEdit.setPlaceholderText(SEARCH_TYPES[6])
         self.oclcSearchEdit = QtWidgets.QLineEdit(parent=self.advancedSearchTab)
         self.oclcSearchEdit.setGeometry(QtCore.QRect(785, 40, 150, 35))
         self.oclcSearchEdit.setStyleSheet(
@@ -228,10 +229,10 @@ class SearchFrame(QtWidgets.QFrame):
         )
         self.oclcSearchEdit.setText("")
         self.oclcSearchEdit.setObjectName("oclcSearchEdit")
-        self.oclcSearchEdit.setPlaceholderText("OCLC")
+        self.oclcSearchEdit.setPlaceholderText(SEARCH_TYPES[7])
         self.searchTab.addTab(self.advancedSearchTab, "")
         self.searchTab.setTabText(
-            self.searchTab.indexOf(self.advancedSearchTab), "Búsqueda Avanzada"
+            self.searchTab.indexOf(self.advancedSearchTab), constants.ADVANCED_SEARCH
         )
 
     def draw_ui(self):

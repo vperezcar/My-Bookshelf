@@ -1,12 +1,14 @@
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 from gui.user_book_widget import UserBookWidget
+from utils.constants.constants import USER_BOOK_TABS, ORDER_BY_ARRAY
 import utils.globals as globals
+import utils.constants.constants as constants
 
 
 class BookPageFrame(QtWidgets.QFrame):
     main_window = None
     grid_layout: list = []
-    tabObjectName: list = ["readTab", "readingTab", "wantToReadTab"]
+    tab_object_names: list = ["readTab", "readingTab", "wantToReadTab"]
     filter_used: list = [4, 4, 4]
 
     def __init__(self, parent, objectName="pageFrame", visible=False):
@@ -38,7 +40,7 @@ class BookPageFrame(QtWidgets.QFrame):
             'font: 600 20pt "Ubuntu Sans";\n' "color: rgb(0, 0, 0);"
         )
         self.orderByLabel.setObjectName("orderByLabel")
-        self.orderByLabel.setText("Ordernar por")
+        self.orderByLabel.setText(constants.ORDER_BY)
         self.orderByComboBox = QtWidgets.QComboBox(parent=self.topFrame)
         self.orderByComboBox.setGeometry(QtCore.QRect(710, 25, 275, 40))
         self.orderByComboBox.setStyleSheet(
@@ -58,7 +60,7 @@ class BookPageFrame(QtWidgets.QFrame):
 
         self.create_tab_widget()
 
-        self.add_order_by_items()
+        self.add_ORDER_BY_ARRAY_items()
         self.orderByComboBox.setCurrentIndex(4)
 
         self.draw_ui()
@@ -69,7 +71,7 @@ class BookPageFrame(QtWidgets.QFrame):
         self.tabs = []
         self.content_tab_widgets = []
 
-        for tabName in self.tabObjectName:
+        for tabName in self.tab_object_names:
             tab = QtWidgets.QScrollArea()
             tab.setObjectName(tabName)
             self.tabs.append(tab)
@@ -83,29 +85,29 @@ class BookPageFrame(QtWidgets.QFrame):
 
     def events(self):
         self.userBookTab.currentChanged.connect(self.switch_tab)
-        self.orderByComboBox.currentIndexChanged.connect(self.order_by)
+        self.orderByComboBox.currentIndexChanged.connect(self.ORDER_BY_ARRAY)
 
     def order_books(self, tab, user_books):
-        order_by = self.filter_used[tab]
-        if order_by == 0:
+        ORDER_BY_ARRAY = self.filter_used[tab]
+        if ORDER_BY_ARRAY == 0:
             return sorted(user_books, key=lambda user_books: user_books.book.title)
-        elif order_by == 1:
+        elif ORDER_BY_ARRAY == 1:
             return sorted(user_books, key=lambda user_books: user_books.book.authors[0])
-        elif order_by == 2:
+        elif ORDER_BY_ARRAY == 2:
             return sorted(
                 user_books, key=lambda user_books: user_books.book.published_date
             )
-        elif order_by == 3:
+        elif ORDER_BY_ARRAY == 3:
             return sorted(
                 user_books,
                 key=lambda user_books: user_books.book.page_count,
                 reverse=True,
             )
-        elif order_by == 4:
+        elif ORDER_BY_ARRAY == 4:
             return sorted(
                 user_books, key=lambda user_books: user_books.update_date, reverse=True
             )
-        elif order_by == 5:
+        elif ORDER_BY_ARRAY == 5:
             return sorted(
                 user_books, key=lambda user_books: user_books.score, reverse=True
             )
@@ -120,10 +122,10 @@ class BookPageFrame(QtWidgets.QFrame):
                 )
             )
 
-    def add_order_by_items(self):
+    def add_ORDER_BY_ARRAY_items(self):
         self.orderByComboBox.blockSignals(True)
         self.orderByComboBox.clear()
-        self.orderByComboBox.addItems(globals.ORDER_BY)
+        self.orderByComboBox.addItems(ORDER_BY_ARRAY)
         # Remove the last item if the read tab is not selected
         if self.userBookTab.currentIndex() != 0:
             self.orderByComboBox.removeItem(5)
@@ -132,7 +134,7 @@ class BookPageFrame(QtWidgets.QFrame):
             self.orderByComboBox.addItems(globals.USER.get_years_read_book())
         self.orderByComboBox.blockSignals(False)
 
-    def order_by(self):
+    def ORDER_BY_ARRAY(self):
         self.filter_used[self.userBookTab.currentIndex()] = (
             self.orderByComboBox.currentIndex()
         )
@@ -143,7 +145,7 @@ class BookPageFrame(QtWidgets.QFrame):
 
         for i, tab in enumerate(self.tabs):
             self.userBookTab.setTabText(
-                self.userBookTab.indexOf(tab), globals.USER_BOOK_TABS[i]
+                self.userBookTab.indexOf(tab), USER_BOOK_TABS[i]
             )
             # Add books to each grid layout removing the previous ones first
             for j in reversed(range(self.grid_layout[i].count())):
@@ -174,7 +176,7 @@ class BookPageFrame(QtWidgets.QFrame):
                             j += 1
 
     def switch_tab(self):
-        self.add_order_by_items()
+        self.add_ORDER_BY_ARRAY_items()
         # Reset the filter to the value it was previously used
         self.orderByComboBox.blockSignals(True)
         self.orderByComboBox.setCurrentIndex(
@@ -187,13 +189,15 @@ class BookPageFrame(QtWidgets.QFrame):
         labelText = ""
         books = None
         if self.userBookTab.currentIndex() == 0:
-            labelText = f"Has leído {len(globals.USER.read_books)} "
+            labelText = f"{constants.HAS_READ} {len(globals.USER.read_books)} "
             books = globals.USER.read_books
         elif self.userBookTab.currentIndex() == 1:
-            labelText = f"Estás leyendo {len(globals.USER.reading_books)} "
+            labelText = f"{constants.ARE_READING} {len(globals.USER.reading_books)} "
             books = globals.USER.reading_books
         else:
-            labelText = f"Quieres leer {len(globals.USER.want_to_read_books)} "
+            labelText = (
+                f"{constants.WANT_TO_READ} {len(globals.USER.want_to_read_books)} "
+            )
             books = globals.USER.want_to_read_books
-        labelText += f"{'libros' if len(books) != 1 or len(books) == 0 else 'libro'}{' en total' if self.userBookTab.currentIndex() == 0 else ''}"
+        labelText += f"{constants.BOOKS if len(books) != 1 or len(books) == 0 else constants.BOOK}{constants.IN_TOTAL if self.userBookTab.currentIndex() == 0 else ''}"
         self.booksLabel.setText(labelText)

@@ -14,7 +14,7 @@ Use Cases:
 
 This Python application is perfect for readers of all types who want a practical way to manage their reading lists while keeping their literary adventures organized.
 
-**Note**: Currently the application is only available in Spanish.
+**Note**: The application is only available in Spanish and English depending on the OS language.
 
 ## Prerequisites
 

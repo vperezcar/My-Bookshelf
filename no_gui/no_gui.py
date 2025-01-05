@@ -1,12 +1,13 @@
 from api.search import SearchType, search_books
 from model.user import UserBookStatus, UserBook
 from utils.globals import DATABASE_CONNECTION, USER
+import utils.constants.constants as constants
+from utils.export import export_to_excel
 
 
 def print_menu():
-    print("1. Mis Libros")
-    print("2. Busqueda")
-    print("3. Salir")
+    for i, option in enumerate(constants.MAIN_OPTIONS):
+        print(f"{i + 1}. {option}")
 
 
 def print_books(books):
@@ -18,21 +19,23 @@ def print_books(books):
 
 
 def display_user_book(user_book):
-    print(f"Titulo: {user_book.book.title}")
-    print(f"Autores: {user_book.book.authors}")
-    print(f"Fecha de publicacion: {user_book.book.published_date}")
-    print(f"Descripcion: {user_book.book.description}")
-    print(f"Numero de paginas: {user_book.book.page_count}")
-    print(f"Editorial: {user_book.book.publisher}")
-    print(f"Categorias: {user_book.book.categories}")
-    print(f"Lenguaje: {user_book.book.language}")
-    option = input(f"Quiere cambiar el estado de este libro? (s/n): ")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[0]} {user_book.status.name}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[1]} {user_book.score}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[2]} {user_book.book.title}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[3]} {user_book.book.authors}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[4]} {user_book.book.publisher}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[5]} {user_book.book.published_date}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[6]} {user_book.book.description}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[7]} {user_book.book.page_count}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[8]} {user_book.book.categories}")
+    print(f"{constants.DISPLAY_USER_BOOK_ARRAY[9]} {user_book.book.language}")
+    option = input(constants.WISH_TO_CHANGE_STATUS)
     if option.lower() == "s":
         global USER
         if user_book.status == UserBookStatus.READ:
-            option = input(f"Leyendo (l) o Quiero leerlo (q): ")
+            option = input(constants.READING_OR_WANT_TO_READ)
             USER.read_books.remove(user_book)
-            if option.lower() == "l":
+            if option.lower() == "l" or option.lower() == "r":
                 user_book.status = UserBookStatus.READING
                 DATABASE_CONNECTION.update_user_book_status(
                     user_book.user_book_id, UserBookStatus.READING.value
@@ -45,7 +48,7 @@ def display_user_book(user_book):
                 )
                 USER.want_to_read_books.append(user_book)
         elif user_book.status == UserBookStatus.READING:
-            option = input(f"Leido (r) o Quiero leerlo (q): ")
+            option = input(constants.READ_OR_WANT_TO_READ)
             USER.reading_books.remove(user_book)
             if option.lower() == "r":
                 user_book.status = UserBookStatus.READ
@@ -60,7 +63,7 @@ def display_user_book(user_book):
                 )
                 USER.want_to_read_books.append(user_book)
         else:
-            option = input(f"Leido (r) o Leyendo (l): ")
+            option = input(constants.READ_OR_READING)
             USER.want_to_read_books.remove(user_book)
             if option.lower() == "r":
                 user_book.status = UserBookStatus.READ
@@ -84,63 +87,51 @@ def print_user_books(user_books):
 def my_books():
     if USER.has_books():
         if USER.read_books:
-            print("Libros leidos:")
+            print(constants.MY_BOOKS_ARRAY[0])
             print_user_books(USER.read_books)
-            selected_book = input(
-                "Seleccione un libro para ver mas detalles (o presione enter para continuar): "
-            )
+            selected_book = input(constants.SELECT_ONE_BOOK_TO_SEE_DETAILS)
             if selected_book:
                 display_user_book(USER.read_books[int(selected_book)])
         if USER.reading_books:
-            print("Libros en lectura:")
+            print(constants.MY_BOOKS_ARRAY[1])
             print_user_books(USER.reading_books)
-            selected_book = input(
-                "Seleccione un libro para ver mas detalles (o presione enter para continuar): "
-            )
+            selected_book = input(constants.SELECT_ONE_BOOK_TO_SEE_DETAILS)
             if selected_book:
                 display_user_book(USER.reading_books[int(selected_book)])
         if USER.want_to_read_books:
-            print("Libros que quiero leer:")
+            print(constants.MY_BOOKS_ARRAY[2])
             print_user_books(USER.want_to_read_books)
-            selected_book = input(
-                "Seleccione un libro para ver mas detalles (o presione enter para continuar): "
-            )
+            selected_book = input(constants.SELECT_ONE_BOOK_TO_SEE_DETAILS)
             if selected_book:
                 display_user_book(USER.want_to_read_books[int(selected_book)])
     else:
-        print("No tienes libros en tu lista")
+        print(constants.NO_BOOKS)
 
 
 # Search functions
 
 
 def print_search_menu():
-    print("1. Busqueda Simple")
-    print("2. Busqueda Avanzada")
-    print("3. Salir")
+    print(f"1. {constants.SIMPLE_SEARCH}")
+    print(f"2. {constants.ADVANCED_SEARCH}")
+    print(f"3. {constants.EXIT}")
 
 
 def print_simple_search():
-    print("0. Todos")
-    print("1. Titulo")
-    print("2. Autor")
-    print("3. Editorial")
-    print("4. Categoria")
-    print("5. ISBN")
-    print("6. LCCN")
-    print("7. OCLC")
+    for i, search_type in enumerate(constants.SEARCH_TYPES):
+        print(f"{i + 1}. {search_type}")
 
 
 def display_book(book):
-    print(f"Titulo: {book.title}")
-    print(f"Autores: {book.authors}")
-    print(f"Fecha de publicacion: {book.published_date}")
-    print(f"Descripcion: {book.description}")
-    print(f"Numero de paginas: {book.page_count}")
-    print(f"Editorial: {book.publisher}")
-    print(f"Categorias: {book.categories}")
-    print(f"Lenguaje: {book.language}")
-    option = input("Desea añadirlo a su lista? (s/n): ")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[0]} {book.title}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[1]} {book.authors}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[2]} {book.published_date}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[3]} {book.description}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[4]} {book.page_count}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[5]} {book.publisher}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[6]} {book.categories}")
+    print(f"{constants.DISPLAY_BOOK_NO_GUI_ARRAY[7]} {book.language}")
+    option = input(constants.WISH_TO_ADD_TO_YOUR_BOOKS)
     if option.lower() == "s":
         global USER
         # Add book to the database if not exist
@@ -154,19 +145,17 @@ def display_book(book):
 
 def iterate_books(search, advanced_search=False, search_by_field=False, search_type=0):
     books = search_books(search, advanced_search, search_by_field, search_type)
-    print(f"Se encontraron {books.number_of_books} libros")
+    print(f"{constants.FOUND} {books.number_of_books} {constants.BOOKS}")
     number_of_books = books.number_of_books
     number_of_books_displayed = 0
     while True:
         print_books(books.books)
         number_of_books_displayed += len(books.books)
-        selected_book = input(
-            "Seleccione un libro para ver mas detalles (o presione enter para continuar): "
-        )
+        selected_book = input(constants.SELECT_ONE_BOOK_TO_SEE_DETAILS)
         if selected_book:
             display_book(books.books[int(selected_book)])
         if number_of_books_displayed < number_of_books:
-            option = input("Desea ver mas libros? (s/n): ")
+            option = input(constants.WISH_TO_SEE_MORE)
             if option.lower() != "s":
                 break
             books = search_books(
@@ -182,29 +171,23 @@ def iterate_books(search, advanced_search=False, search_by_field=False, search_t
 
 def simple_search():
     search_by_field = False
-    search = input("Ingrese el termino de busqueda: ")
-    print("Seleccione el campo por el cual desea buscar:")
+    search = input(constants.ADD_SEARCH_TERM)
+    print(constants.SELECT_FIELD)
     print_simple_search()
-    search_type = int(input("Opcion: "))
+    search_type = int(input(constants.OPTION))
     if search_type > 0:
         search_by_field = True
         search_type -= 1
         if search_type > 6:
             search_type = 0
-        print(f"Buscando por {SearchType(search_type).name}")
+        print(f"{constants.LOOKING_FOR} {SearchType(search_type).name}")
     iterate_books(search, search_by_field=search_by_field, search_type=search_type)
 
 
 def advanced_search():
     search_inputs = []
-    search_inputs.append(
-        input(
-            "Ingrese el termino de busqueda (puede dejarlo vacio para buscar por cada campo): "
-        )
-    )
-    print(
-        "Ingrese el termino de busqueda por cada campo, si no desea buscar por un campo dejalo vacio:"
-    )
+    search_inputs.append(input(constants.ADVANCED_SEARCH_INPUT))
+    print(constants.ADVANCED_SEARCH_SPECIFIC_INPUT)
     search_fields = SearchType.__members__.keys()
     for field in search_fields:
         search_inputs.append(input(f"{field}: "))
@@ -213,24 +196,33 @@ def advanced_search():
 
 def search():
     print_search_menu()
-    option = input("Opcion: ")
+    option = input(constants.OPTION)
     if option == "1":
         simple_search()
     elif option == "2":
         advanced_search()
     else:
-        print("Opcion no valida")
+        print(constants.UNKNOWN_OPTION)
+
+
+def export():
+    fileName = input(constants.EXPORT_TO_EXCEL_INPUT)
+    if not fileName.endswith(".xlsx"):
+        fileName += ".xlsx"
+    export_to_excel(fileName)
+    print(constants.SUCCESS_EXPORT)
 
 
 def no_gui_app():
-    print("Bienvenido a Book App, pulse una de las siguientes opciones:")
+    print(constants.WELCOME_MESSAGE)
     while True:
         print_menu()
-        option = input("Opcion: ")
+        option = input(constants.OPTION)
         if option == "1":
             my_books()
         elif option == "2":
             search()
+        elif option == "3":
+            export()
         else:
-            print("Saliendo...")
             break

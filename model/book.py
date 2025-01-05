@@ -1,4 +1,5 @@
 from model.image import Image
+import utils.constants.constants as constants
 import re
 
 
@@ -48,34 +49,34 @@ class Book:
         self.image = Image(image_link) if image_link else None
 
     def get_authors(self):
-        return f"De: {"Desconocido" if not self.authors else ", ".join(self.authors)}"
+        return f"{constants.FROM} {constants.UNKNOWN if not self.authors else ", ".join(self.authors)}"
 
     def get_publisher(self):
         return (
-            f"Publicado por: {self.publisher}"
+            f"{constants.PUBLISHED_BY} {self.publisher}"
             if self.publisher
-            else "Editorial desconocida"
+            else constants.UNKNOWN_PUBLISHER
         )
 
     def get_published_date(self):
         return (
-            f"Fecha de publicación: {self.published_date}"
+            f"{constants.PUBLISHED_DATE} {self.published_date}"
             if self.published_date
-            else "Fecha de publicación desconocida"
+            else constants.UNKNOWN_PUBLISHED_DATE
         )
 
     def get_number_of_pages(self):
         return (
-            f"{self.page_count} páginas"
+            f"{self.page_count} {constants.PAGES}"
             if self.page_count
-            else "Número de páginas desconocido"
+            else constants.UNKNOWN_PAGES
         )
 
     def get_description(self):
         if not self.description:
-            return "Descripción no disponible"
+            return constants.UNKNOWN_DESCRIPTION
         # There are some reviews in the description, beutifiy the text to make it more readable
-        description = self.split_reviews("Reseñas de .*:", "por")
+        description = self.split_reviews(constants.REVIEWS_BY_REGEX, constants.BY)
         # Split the english description
         math = re.search("ENGLISH DESCRIPTION", self.description)
         if math:
@@ -105,7 +106,11 @@ class Book:
             return self.description
 
     def get_categories(self):
-        return f"Categorías: {"Desconocidas" if not self.categories else ", ".join(self.categories)}"
+        return f"{constants.CATEGORIES} {constants.UNKNOWN if not self.categories else ", ".join(self.categories)}"
 
     def get_language(self):
-        return f"Idioma: {self.language}" if self.language else "Idioma desconocido"
+        return (
+            f"{constants.LANGUAGE} {self.language}"
+            if self.language
+            else constants.UNKNOWN_LANGUAGE
+        )
