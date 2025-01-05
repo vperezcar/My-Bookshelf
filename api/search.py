@@ -85,6 +85,10 @@ def advanced_search_books(search_inputs, start_index=0, max_results=10):
 
 def parse_book(book):
     volume_info = book["volumeInfo"]
+    # Change date format from yyyy-mm-dd to dd/mm/yyyy
+    if volume_info.get("publishedDate", None):
+        date = volume_info["publishedDate"].split("-")
+        volume_info["publishedDate"] = f"{date[2]}/{date[1]}/{date[0]}"
     return Book(
         id=book["id"],
         title=volume_info.get("title", None),

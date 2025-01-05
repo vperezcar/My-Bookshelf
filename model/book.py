@@ -72,10 +72,18 @@ class Book:
         )
 
     def get_description(self):
-        # There are some reviews in the description, beutifiy the text to make it more readable
         if not self.description:
             return "Descripción no disponible"
-        match = re.search("Reseñas de .*:", self.description)
+        # There are some reviews in the description, beutifiy the text to make it more readable
+        description = self.split_reviews("Reseñas de .*:", "por")
+        # Split the english description
+        math = re.search("ENGLISH DESCRIPTION", self.description)
+        if math:
+            description = f"{self.description[:math.start()]}\n{self.description[math.start():math.end()]}{self.description[math.end():]}"
+        return description
+
+    def split_reviews(self, search_input, by_text):
+        match = re.search(search_input, self.description)
         if match:
             description = self.description[: match.end()] + "\n"
             # Retrieve each review and add a new line before it
@@ -87,7 +95,7 @@ class Book:
                 review = review.strip()
                 if review:
                     if author:
-                        description += f"por {review}.\n"
+                        description += f"{by_text} {review}.\n"
                         author = False
                     else:
                         description += f'"{review}" '
