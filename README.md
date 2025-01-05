@@ -3,13 +3,15 @@
 My Bookshelf is a Python-based application designed to help you organize and manage your reading journey. Whether you're an avid reader or someone looking to track your literary aspirations, My Bookshelf provides a simple and intuitive interface to keep your book collection in order.
 
 Key Features:
-Track Your Reading Status: Categorize books into three lists—Read, Currently Reading, and To Be Read (TBR)—for seamless organization.
-Progress Tracking: For books you're currently reading, log your progress to stay motivated and monitor how far you've come.
-Search and Filter: Quickly locate books using filters based on title, author, genre, or reading status.
+* Track Your Reading Status: Categorize books into three lists—Read, Currently Reading, and To Be Read (TBR)—for seamless organization.
+* Progress Tracking: For books you're currently reading, log your progress to stay motivated and monitor how far you've come.
+* Search and Filter: Quickly locate books using filters based on title, author, genre, or reading status.
+
 Use Cases:
-Keep track of all the books you've read over time.
-Organize your current reads and stay on top of your reading goals.
-Build a wishlist of books you want to read in the future.
+* Keep track of all the books you've read over time.
+* Organize your current reads and stay on top of your reading goals.
+* Build a wishlist of books you want to read in the future.
+
 This Python application is perfect for readers of all types who want a practical way to manage their reading lists while keeping their literary adventures organized.
 
 **Note**: Currently the application is only available in Spanish.
