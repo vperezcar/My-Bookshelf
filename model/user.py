@@ -66,10 +66,21 @@ class User:
     def has_books(self):
         return bool(self.want_to_read_books or self.reading_books or self.read_books)
 
-    def get_years_book(self):
+    def get_years_read_book(self):
         years = []
         for user_book in self.read_books:
             year = user_book.update_date.split("/")[2].split(" ")[0]
             if year not in years:
                 years.append(year)
         return years
+
+    def get_years_book(self):
+        years = []
+        for user_book in self.get_books():
+            year = user_book.update_date.split("/")[2].split(" ")[0]
+            if year not in years:
+                years.append(year)
+        return years
+
+    def get_books(self):
+        return self.read_books + self.reading_books + self.want_to_read_books

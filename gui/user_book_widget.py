@@ -64,14 +64,14 @@ class UserBookWidget(QtWidgets.QWidget):
         for i in range(5):
             star = QtWidgets.QLabel(parent=self)
             star.setGeometry(self.score_icons_position[i])
-            star.setPixmap(QtGui.QPixmap("qt/../assets/icons8-star-32.png"))
+            star.setPixmap(QtGui.QPixmap("assets/icons8-star-32.png"))
             star.setText("")
             star.setScaledContents(True)
             star.setObjectName(self.score_icons_name[i])
             if user_book.score == 0:
                 star.hide()
             elif user_book.score <= i:
-                star.setPixmap(QtGui.QPixmap("qt/../assets/icons8-grey-star-32.png"))
+                star.setPixmap(QtGui.QPixmap("assets/icons8-grey-star-32.png"))
 
         # Set user book
         self.titleLabel.setText(user_book.book.title)
@@ -83,7 +83,7 @@ class UserBookWidget(QtWidgets.QWidget):
             pixmap.loadFromData(user_book.book.image.data)
             self.bookIcon.setPixmap(pixmap)
         else:
-            self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
+            self.bookIcon.setPixmap(QtGui.QPixmap("assets/icons8-reading-64.png"))
 
         self.events()
 

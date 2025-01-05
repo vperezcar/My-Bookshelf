@@ -4,6 +4,7 @@ from gui.user_book_frame import UserBookFrame
 from gui.search_frame import SearchFrame
 from model.user import UserBook
 from utils.globals import MAIN_OPTIONS, get_user_book_by_id
+from utils.export import export_to_excel
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -33,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         icon = QtGui.QIcon()
         icon.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-book-shelf-64.png"),
+            QtGui.QPixmap("assets/icons8-book-shelf-64.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )
@@ -55,7 +56,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         icon1 = QtGui.QIcon()
         icon1.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-search-64.png"),
+            QtGui.QPixmap("assets/icons8-search-64.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )
@@ -63,6 +64,21 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mySearchButton.setIconSize(QtCore.QSize(32, 32))
         self.mySearchButton.setObjectName("mySearchButton")
         self.mySearchButton.clicked.connect(lambda: self.switchPage(1))
+        self.exportExcelButton = QtWidgets.QPushButton(parent=self.sideMenuFrame)
+        self.exportExcelButton.setGeometry(QtCore.QRect(30, 350, 201, 81))
+        self.exportExcelButton.setStyleSheet(
+            "color: rgb(0, 0, 0);\n" 'font: 20pt "Ubuntu Sans";'
+        )
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(
+            QtGui.QPixmap("assets/icons8-export-excel-64.png"),
+            QtGui.QIcon.Mode.Normal,
+            QtGui.QIcon.State.Off,
+        )
+        self.exportExcelButton.setIcon(icon2)
+        self.exportExcelButton.setIconSize(QtCore.QSize(32, 32))
+        self.exportExcelButton.setObjectName("exportExcelButton")
+        self.exportExcelButton.clicked.connect(lambda: self.export_excel())
 
         self.mainFrame = QtWidgets.QFrame(parent=self.centralwidget)
         self.mainFrame.setGeometry(QtCore.QRect(250, 0, 1030, 720))
@@ -85,7 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.backButton.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-back-64.png"),
+            QtGui.QPixmap("assets/icons8-back-64.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )
@@ -121,6 +137,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.myBookButton.setText("Mis Libros")
         self.titleLabel.setText("My Bookshelf")
         self.mySearchButton.setText("Búsqueda")
+        self.exportExcelButton.setText("Exportar")
         self.sectionLabel.setText("Mis Libros")
 
     def switchPage(self, position):
@@ -154,3 +171,18 @@ class MainWindow(QtWidgets.QMainWindow):
             self.sectionLabel.setText(user_book.title)
             self.userBookFrame.display_book_information(user_book)
         self.userBookFrame.setVisible(True)
+
+    def export_excel(self):
+        fileName, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Guardar Archivo", "", "Excel Files(*.xlsx); All Files(*.*)"
+        )
+
+        if fileName:
+            if not fileName.endswith(".xlsx"):
+                fileName += ".xlsx"
+            export_to_excel(fileName)
+            msg = QtWidgets.QMessageBox()
+            msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+            msg.setText("Archivo exportado exitosamente")
+            msg.setWindowTitle("Exportar a Excel")
+            msg.exec()

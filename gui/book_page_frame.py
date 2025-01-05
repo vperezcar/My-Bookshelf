@@ -129,7 +129,7 @@ class BookPageFrame(QtWidgets.QFrame):
             self.orderByComboBox.removeItem(5)
         else:
             # Add the years to the combo box
-            self.orderByComboBox.addItems(globals.USER.get_years_book())
+            self.orderByComboBox.addItems(globals.USER.get_years_read_book())
         self.orderByComboBox.blockSignals(False)
 
     def order_by(self):

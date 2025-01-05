@@ -49,7 +49,7 @@ class UserBookFrame(QtWidgets.QFrame):
         self.bookIcon = QtWidgets.QLabel(parent=self.centralwidget)
         self.bookIcon.setGeometry(QtCore.QRect(45, 15, 128, 193))
         self.bookIcon.setText("")
-        self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
+        self.bookIcon.setPixmap(QtGui.QPixmap("assets/icons8-reading-64.png"))
         self.bookIcon.setScaledContents(True)
         self.bookIcon.setObjectName("bookIcon")
 
@@ -113,7 +113,7 @@ class UserBookFrame(QtWidgets.QFrame):
         for i in range(5):
             star = QtWidgets.QLabel(parent=self)
             star.setGeometry(self.score_icons_position[i])
-            star.setPixmap(QtGui.QPixmap("qt/../assets/icons8-star-32.png"))
+            star.setPixmap(QtGui.QPixmap("assets/icons8-star-32.png"))
             star.setText("")
             star.setScaledContents(True)
             star.setObjectName(self.score_icons_name[i])
@@ -190,7 +190,7 @@ class UserBookFrame(QtWidgets.QFrame):
             pixmap.loadFromData(self.book.image.data)
             self.bookIcon.setPixmap(pixmap)
         else:
-            self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
+            self.bookIcon.setPixmap(QtGui.QPixmap("assets/icons8-reading-64.png"))
 
         if is_user_book:
             self.draw_user_book_specific_data()
@@ -213,9 +213,9 @@ class UserBookFrame(QtWidgets.QFrame):
     def draw_user_book_specific_data(self):
         for i in range(5):
             self.score_icons[i].setPixmap(
-                QtGui.QPixmap("qt/../assets/icons8-star-32.png")
+                QtGui.QPixmap("assets/icons8-star-32.png")
                 if self.user_book.score > i
-                else QtGui.QPixmap("qt/../assets/icons8-grey-star-32.png")
+                else QtGui.QPixmap("assets/icons8-grey-star-32.png")
             )
             self.score_icons[i].setVisible(self.user_book.status.value == 0)
 

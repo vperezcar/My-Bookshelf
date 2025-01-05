@@ -54,7 +54,7 @@ class SearchFrame(QtWidgets.QFrame):
         self.searchButton.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-search-32.png"),
+            QtGui.QPixmap("assets/icons8-search-32.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )
@@ -90,7 +90,7 @@ class SearchFrame(QtWidgets.QFrame):
         self.backResultButton.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-back-24.png"),
+            QtGui.QPixmap("assets/icons8-back-24.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )
@@ -115,7 +115,7 @@ class SearchFrame(QtWidgets.QFrame):
         self.forwardResultButton.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(
-            QtGui.QPixmap("qt/../assets/icons8-forward-24.png"),
+            QtGui.QPixmap("assets/icons8-forward-24.png"),
             QtGui.QIcon.Mode.Normal,
             QtGui.QIcon.State.Off,
         )

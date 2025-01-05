@@ -111,3 +111,7 @@ def get_user_book_by_id(id):
         if user_book.book.id == id:
             return user_book
     return None
+
+
+def get_data():
+    return USER.get_books(), USER.get_years_book()

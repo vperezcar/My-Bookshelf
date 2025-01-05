@@ -43,7 +43,7 @@ class BookWidget(QtWidgets.QWidget):
             pixmap.loadFromData(book.image.data)
             self.bookIcon.setPixmap(pixmap)
         else:
-            self.bookIcon.setPixmap(QtGui.QPixmap("qt/../assets/icons8-reading-64.png"))
+            self.bookIcon.setPixmap(QtGui.QPixmap("assets/icons8-reading-64.png"))
 
         self.events()
 
